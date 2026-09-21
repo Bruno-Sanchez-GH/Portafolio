@@ -4,7 +4,7 @@ Portfolio personal de una sola página desarrollado con React, TypeScript y Vite
 
 ## Requisitos
 
-- Node.js
+- Node.js 24
 - npm
 
 ## Instalación
@@ -32,7 +32,24 @@ Para revisar localmente el build de producción:
 npm run preview
 ```
 
-El resultado compilado se genera en `dist/`. Las rutas de los assets son relativas para permitir la publicación bajo una ruta de repositorio.
+El resultado compilado se genera en `dist/`. La vista previa queda disponible en `http://localhost:4173/Portafolio/`.
+
+## Publicación en GitHub Pages
+
+El proyecto está configurado para publicarse en:
+
+`https://bruno-sanchez-gh.github.io/Portafolio/`
+
+El workflow `.github/workflows/deploy-pages.yml` instala las dependencias con `npm ci`, ejecuta el typecheck y el build, y publica únicamente `dist/`. Se ejecuta con cada push a `main` y también puede iniciarse manualmente.
+
+Para activar el primer despliegue:
+
+1. Abrir **Settings → Pages** en el repositorio.
+2. En **Build and deployment → Source**, seleccionar **GitHub Actions**.
+3. Abrir **Actions → Deploy portfolio to GitHub Pages** y ejecutar **Run workflow** sobre `main` si el workflow disparado por el push anterior no se reanuda automáticamente.
+4. Esperar a que finalice el job `deploy` y abrir la URL indicada por GitHub en el environment `github-pages`.
+
+La aplicación es una página estática sin router ni servicios necesarios para renderizar su contenido. Las URLs de Render y de los demás proyectos son enlaces externos.
 
 ## Estructura principal
 
