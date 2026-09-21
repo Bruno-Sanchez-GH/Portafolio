@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { KeyboardEvent, TouchEvent, TransitionEvent } from 'react'
 import { projects } from '../data/projects'
-import type { Project } from '../data/projects'
+import type { ProjectId, ShowcaseProject } from '../data/projects'
 import { CarouselNavigation } from './CarouselNavigation'
 import { ProjectCard } from './ProjectCard'
 
@@ -10,11 +10,18 @@ type Move = { to: number; direction: Direction }
 type Motion = Move & { from: number; started: boolean }
 
 type ProjectCarouselProps = {
-  onOpenDetails: (project: Project, trigger: HTMLElement) => void
+  onOpenDetails: (project: ShowcaseProject, trigger: HTMLElement) => void
   shortcutsDisabled?: boolean
 }
 
-export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: ProjectCarouselProps) {
+export type ProjectCarouselHandle = {
+  selectProject: (id: ProjectId) => void
+}
+
+export const ProjectCarousel = forwardRef<ProjectCarouselHandle, ProjectCarouselProps>(function ProjectCarousel(
+  { onOpenDetails, shortcutsDisabled = false },
+  ref,
+) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [motion, setMotion] = useState<Motion | null>(null)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -26,6 +33,7 @@ export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: Pr
   const frameRef = useRef<number | null>(null)
   const touchRef = useRef<{ x: number; y: number } | null>(null)
   const suppressClickRef = useRef(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -37,8 +45,13 @@ export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: Pr
 
   useEffect(() => {
     const preload = (source: string) => { const image = new Image(); image.src = source }
-    preload(projects[(activeIndex + 1) % projects.length].image)
-    preload(projects[(activeIndex - 1 + projects.length) % projects.length].image)
+    const adjacent = [
+      projects[(activeIndex + 1) % projects.length],
+      projects[(activeIndex - 1 + projects.length) % projects.length],
+    ]
+    adjacent.forEach((project) => {
+      if ('image' in project) preload(project.image)
+    })
   }, [activeIndex])
 
   useEffect(() => () => {
@@ -113,6 +126,17 @@ export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: Pr
     enqueue({ to, direction: to > from ? 1 : -1 }, true)
   }
 
+  useImperativeHandle(ref, () => ({
+    selectProject(id) {
+      const index = projects.findIndex((project) => project.id === id)
+      if (index < 0) return
+      select(index)
+      window.requestAnimationFrame(() => {
+        sectionRef.current?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest' })
+      })
+    },
+  }))
+
   function onKeyDown(event: KeyboardEvent<HTMLElement>) {
     if (shortcutsDisabled) return
     if (event.key === 'ArrowLeft') {
@@ -149,7 +173,7 @@ export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: Pr
   const displayedSlides = motion ? [motion.from, motion.to] : [activeIndex]
 
   return (
-    <section className="carousel-section" aria-label="Proyectos y experiencia">
+    <section className="carousel-section" aria-label="Proyectos y experiencia" ref={sectionRef}>
       <div className="carousel-root" role="region" aria-roledescription="carrusel" aria-label="Proyectos y experiencia de Bruno Sánchez" tabIndex={0} onKeyDown={onKeyDown}>
         <div
           className="carousel-stage"
@@ -191,4 +215,4 @@ export function ProjectCarousel({ onOpenDetails, shortcutsDisabled = false }: Pr
       </div>
     </section>
   )
-}
+})

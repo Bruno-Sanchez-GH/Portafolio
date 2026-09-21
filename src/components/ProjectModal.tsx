@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
-import type { Project } from '../data/projects'
+import type { ShowcaseProject } from '../data/projects'
 import { CloseIcon, ExternalIcon } from './Icons'
 
 type ProjectModalProps = {
-  project: Project
+  project: ShowcaseProject
   trigger: HTMLElement
   onClose: () => void
 }

@@ -17,15 +17,35 @@ export const links = {
   cvPreview: publicAsset('assets/cv-preview.webp'),
 } as const
 
-export type ProjectId = 'despues-dividimos' | 'log-api' | 'fitlogic' | 'bookspace' | 'nexo-kinetics' | 'cv'
+export const aboutContent = {
+  title: 'Hola, soy Bruno.',
+  education: 'Estudiante de tercer año de Ingeniería en Informática.',
+  focus: 'Me enfoco en el desarrollo backend y en crear aplicaciones que resuelvan problemas cotidianos.',
+  internship: 'El 28 de septiembre de 2026 comienzo una pasantía de desarrollo de software en Nexo Kinetics.',
+  universityLogo: publicAsset('assets/logos/logo-ubp.png'),
+  technologies: [
+    { name: 'TypeScript', logo: publicAsset('assets/logos/typescript.svg') },
+    { name: 'Node.js', logo: publicAsset('assets/logos/nodedotjs.svg') },
+    { name: 'PostgreSQL', logo: publicAsset('assets/logos/postgresql.svg') },
+  ],
+} as const
+
+export type ProjectId = 'about' | 'despues-dividimos' | 'log-api' | 'fitlogic' | 'bookspace' | 'nexo-kinetics' | 'cv'
 
 export type ProjectDetails = {
   summary: string
   features: readonly string[]
 }
 
-export type Project = {
-  id: ProjectId
+export type AboutProject = {
+  id: 'about'
+  title: 'Sobre mí'
+  category: 'Presentación'
+  description: string
+}
+
+export type ShowcaseProject = {
+  id: Exclude<ProjectId, 'about'>
   title: string
   category: string
   description: string
@@ -38,7 +58,15 @@ export type Project = {
   details?: ProjectDetails
 }
 
+export type Project = AboutProject | ShowcaseProject
+
 export const projects: readonly Project[] = [
+  {
+    id: 'about',
+    title: 'Sobre mí',
+    category: 'Presentación',
+    description: aboutContent.focus,
+  },
   {
     id: 'despues-dividimos',
     title: 'Después Dividimos',

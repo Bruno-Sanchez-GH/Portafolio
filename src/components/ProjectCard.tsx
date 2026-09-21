@@ -1,5 +1,6 @@
 import type { MouseEvent } from 'react'
-import type { Project } from '../data/projects'
+import type { Project, ShowcaseProject } from '../data/projects'
+import { AboutCard } from './AboutCard'
 import { CVCard } from './CVCard'
 import { ExternalIcon } from './Icons'
 
@@ -7,14 +8,16 @@ type ProjectCardProps = {
   project: Project
   interactive: boolean
   priority?: boolean
-  onOpenDetails: (project: Project, trigger: HTMLElement) => void
+  onOpenDetails: (project: ShowcaseProject, trigger: HTMLElement) => void
 }
 
 export function ProjectCard({ project, interactive, priority = false, onOpenDetails }: ProjectCardProps) {
+  if (project.id === 'about') return <AboutCard active={interactive} />
   if (project.id === 'cv') return <CVCard interactive={interactive} />
+  const showcaseProject = project
 
   function openDetails(event: MouseEvent<HTMLButtonElement>) {
-    onOpenDetails(project, event.currentTarget)
+    onOpenDetails(showcaseProject, event.currentTarget)
   }
 
   return (
