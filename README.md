@@ -1,6 +1,6 @@
-# Portfolio de Bruno Sánchez
+# Portafolio de Bruno Sánchez
 
-Portfolio personal de una sola página desarrollado con React, TypeScript y Vite. Presenta proyectos, experiencia, información de contacto y un CV descargable mediante un carrusel adaptable a dispositivos móviles y escritorio.
+Portafolio personal de una sola página desarrollado con React, TypeScript y Vite. Presenta proyectos, experiencia, información de contacto y un CV descargable mediante un carrusel adaptable a dispositivos móviles y escritorio.
 
 ## Requisitos
 
@@ -46,7 +46,7 @@ Para activar el primer despliegue:
 
 1. Abrir **Settings → Pages** en el repositorio.
 2. En **Build and deployment → Source**, seleccionar **GitHub Actions**.
-3. Abrir **Actions → Deploy portfolio to GitHub Pages** y ejecutar **Run workflow** sobre `main` si el workflow disparado por el push anterior no se reanuda automáticamente.
+3. Abrir **Actions**, seleccionar el workflow de despliegue a GitHub Pages y ejecutar **Run workflow** sobre `main` si el workflow disparado por el push anterior no se reanuda automáticamente.
 4. Esperar a que finalice el job `deploy` y abrir la URL indicada por GitHub en el environment `github-pages`.
 
 La aplicación es una página estática sin router ni servicios necesarios para renderizar su contenido. Las URLs de Render y de los demás proyectos son enlaces externos.
@@ -55,5 +55,5 @@ La aplicación es una página estática sin router ni servicios necesarios para 
 
 - `src/components/`: componentes de interfaz.
 - `src/data/projects.ts`: contenido y enlaces de proyectos.
-- `public/assets/`: imágenes utilizadas por el portfolio.
+- `public/assets/`: imágenes utilizadas por el portafolio.
 - `public/Bruno_Sanchez_CV.pdf`: CV público enlazado desde la aplicación.
