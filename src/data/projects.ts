@@ -23,7 +23,7 @@ export const aboutContent = {
   title: 'Hola, soy Bruno.',
   education: 'Estudiante de tercer año de Ingeniería en Informática.',
   focus: 'Me enfoco en el desarrollo backend y en crear aplicaciones que resuelvan problemas cotidianos.',
-  internship: 'El 28 de septiembre de 2026 comienzo una pasantía de desarrollo de software en Nexo Kinetics.',
+  internship: 'Actualmente realizo una pasantía de desarrollo de software en Nexo Kinetics, donde sumo experiencia trabajando dentro de un equipo y en un entorno profesional.',
   universityLogo: publicAsset('assets/logos/logo-ubp.png'),
   technologies: [
     { name: 'TypeScript', logo: publicAsset('assets/logos/typescript.svg') },
@@ -148,8 +148,8 @@ export const projects: readonly Project[] = [
   {
     id: 'nexo-kinetics',
     title: 'Nexo Kinetics',
-    category: 'Pasantía confirmada en Nexo Kinetics. Inicio: 28 de septiembre de 2026.',
-    description: 'Próxima incorporación a una pasantía de desarrollo de software de dos meses.',
+    category: 'Pasantía en Nexo Kinetics · Septiembre 2026 — Actualidad.',
+    description: 'Experiencia en desarrollo de software dentro de un equipo y un entorno profesional.',
     image: publicAsset('assets/nexo-kinetics.webp'),
     imageAlt: 'Logo de Nexo Kinetics',
     imageTheme: 'black',
